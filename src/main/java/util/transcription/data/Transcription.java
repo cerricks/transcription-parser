@@ -82,4 +82,20 @@ public class Transcription {
     return null;
   }
 
+  public String getTranscript(double from, double to) {
+    StringBuilder sb = new StringBuilder();
+
+    for (Result result : results) {
+      for (Alternative alternative : result.getAlternatives()) {
+        for (Timestamp timestamp : alternative.getTimestamps()) {
+          if (timestamp.getFrom() >= from && timestamp.getFrom() < to) {
+            sb.append(timestamp.getWord()).append(' ');
+          }
+        }
+      }
+    }
+
+    return sb.toString().trim();
+  }
+
 }

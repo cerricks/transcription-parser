@@ -69,24 +69,21 @@ public class TranscriptionResultFileParser {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(OUTPUT2_FILENAME))) {
       SpeakerLabel startSpeakerLabel = null;
       SpeakerLabel previousSpeakerLabel = null;
-      Alternative alternative = null;
 
       for (SpeakerLabel speakerLabel : transcription.getSpeakerLabels()) {
         if (startSpeakerLabel == null) {
           startSpeakerLabel = speakerLabel;
-          alternative = transcription.getAlternativeStartingAt(speakerLabel.getFrom());
           previousSpeakerLabel = speakerLabel;
           continue;
         }
 
-        if (speakerLabel.getFrom() > alternative.getEndTime()) {
+        if (speakerLabel.getSpeaker() != previousSpeakerLabel.getSpeaker()) {
           writer.write("Speaker " + startSpeakerLabel.getSpeaker() + " (" + startSpeakerLabel.getFrom() + "-" + previousSpeakerLabel.getTo() + "):");
           writer.newLine();
-          writer.write(alternative.getTranscript());
+          writer.write(transcription.getTranscript(startSpeakerLabel.getFrom(), previousSpeakerLabel.getTo()));
           writer.newLine();
 
           startSpeakerLabel = speakerLabel;
-          alternative = transcription.getAlternativeStartingAt(speakerLabel.getFrom());
         }
 
         previousSpeakerLabel = speakerLabel;
@@ -94,7 +91,7 @@ public class TranscriptionResultFileParser {
 
       writer.write("Speaker " + startSpeakerLabel.getSpeaker() + " (" + startSpeakerLabel.getFrom() + "-" + previousSpeakerLabel.getTo() + "):");
       writer.newLine();
-      writer.write(alternative.getTranscript());
+      writer.write(transcription.getTranscript(startSpeakerLabel.getFrom(), previousSpeakerLabel.getTo()));
       writer.newLine();
     }
 
