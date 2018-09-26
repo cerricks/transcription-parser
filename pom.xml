@@ -64,6 +64,7 @@
               <goal>single</goal>
             </goals>
             <configuration>
+              <finalName>transcription-parser</finalName>
               <archive>
                 <manifest>
                   <mainClass>util.transcription.TranscriptionResultFileParser</mainClass>
@@ -72,6 +73,7 @@
               <descriptorRefs>
                 <descriptorRef>jar-with-dependencies</descriptorRef>
               </descriptorRefs>
+              <appendAssemblyId>false</appendAssemblyId>
             </configuration>
           </execution>
         </executions>
