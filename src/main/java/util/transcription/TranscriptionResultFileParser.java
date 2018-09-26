@@ -15,6 +15,7 @@
  */
 package util.transcription;
 
+import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -62,6 +63,7 @@ public class TranscriptionResultFileParser {
 
   public void parse(String input) throws IOException {
     ObjectMapper objectMapper = new ObjectMapper();
+    objectMapper.configure(Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
 
     Transcription transcription = objectMapper.readValue(new File(input), Transcription.class);
 
