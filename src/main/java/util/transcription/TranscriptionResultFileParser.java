@@ -35,6 +35,8 @@ import util.transcription.data.Transcription;
  */
 public class TranscriptionResultFileParser {
 
+  private final static Logger logger = Logger.getLogger(TranscriptionResultFileParser.class.getName());
+
   private final static String OUTPUT1_FILENAME = "continuous_transcript.txt";
   private final static String OUTPUT2_FILENAME = "speaker_duration.txt";
   private final static String OUTPUT3_FILENAME = "keyword_count.txt";
@@ -46,11 +48,16 @@ public class TranscriptionResultFileParser {
 
     TranscriptionResultFileParser parser = new TranscriptionResultFileParser();
 
+    logger.log(Level.INFO, "Parsing file: {0}", args[0]);
+
     try {
       parser.parse(args[0]);
     } catch (IOException ex) {
-      Logger.getLogger(TranscriptionResultFileParser.class.getName()).log(Level.SEVERE, null, ex);
+      logger.log(Level.SEVERE, null, ex);
+      System.exit(1);
     }
+
+    logger.log(Level.INFO, "Processing complete");
   }
 
   public void parse(String input) throws IOException {
