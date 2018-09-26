@@ -41,7 +41,7 @@ public class TranscriptionResultFileParser {
 
   public static void main(String[] args) {
     if (args.length != 1) {
-      throw new IllegalArgumentException("Usage: TranscriptionResultFileParser input");
+      throw new IllegalArgumentException("path to input file is required");
     }
 
     TranscriptionResultFileParser parser = new TranscriptionResultFileParser();
